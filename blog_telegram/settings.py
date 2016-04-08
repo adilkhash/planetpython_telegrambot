@@ -2,12 +2,18 @@
 
 import os
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SECRET_KEY = 'MyS3cr37K3Y'
+import environ
 
-DEBUG = True
+root = environ.Path(__file__) - 3
+env = environ.Env(DEBUG=(bool, False))
+environ.Env.read_env()
 
-ALLOWED_HOSTS = []
+BASE_DIR = str(root)
+SECRET_KEY = env.str('SECRET_KEY', 'my-santa-claus')
+
+DEBUG = env.bool('DEBUG', True)
+
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[])
 
 
 # Application definition
@@ -85,3 +91,6 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
+
+
+TELEGRAM_BOT_TOKEN = env.str('TELEGRAM_BOT_TOKEN', 'test')

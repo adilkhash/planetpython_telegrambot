@@ -62,3 +62,4 @@ target/
 db.sqlite3
 
 .idea/
+.env

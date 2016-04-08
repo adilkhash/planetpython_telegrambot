@@ -8,12 +8,12 @@ from django.http import HttpResponseForbidden, HttpResponseBadRequest, JsonRespo
 from django.views.generic import View
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+from django.conf import settings
 
 from .utils import parse_planetpy_rss
 
 
-TOKEN = '<Our_Bot_Token>'
-TelegramBot = telepot.Bot(TOKEN)
+TelegramBot = telepot.Bot(settings.TELEGRAM_BOT_TOKEN)
 
 
 def _display_help():
@@ -26,7 +26,7 @@ def _display_planetpy_feed():
 
 class CommandReceiveView(View):
     def post(self, request, bot_token):
-        if bot_token != TOKEN:
+        if bot_token != settings.TELEGRAM_BOT_TOKEN:
             return HttpResponseForbidden('Invalid token')
 
         commands = {

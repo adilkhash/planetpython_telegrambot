@@ -1,6 +1,7 @@
 # -*- coding: utf8 -*-
 
 import json
+import logging
 
 import telepot
 from django.template.loader import render_to_string
@@ -14,6 +15,8 @@ from .utils import parse_planetpy_rss
 
 
 TelegramBot = telepot.Bot(settings.TELEGRAM_BOT_TOKEN)
+
+logger = logging.getLogger('telegram.bot')
 
 
 def _display_help():
@@ -35,8 +38,11 @@ class CommandReceiveView(View):
             'feed': _display_planetpy_feed,
         }
 
+        raw = request.body.decode('utf-8')
+        logger.info(raw)
+
         try:
-            payload = json.loads(request.body.decode('utf-8'))
+            payload = json.loads(raw)
         except ValueError:
             return HttpResponseBadRequest('Invalid request body')
         else:

@@ -135,7 +135,7 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
-        'apps.bot.views': {
+        'telegram.bot': {
             'handlers': ['file_handler'],
             'level': 'INFO',
             'propagate': False,

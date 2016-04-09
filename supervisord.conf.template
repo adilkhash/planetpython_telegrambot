@@ -1,0 +1,21 @@
+[unix_http_server]
+file=/tmp/telgram_bot_supervisord.sock
+
+[supervisord]
+logfile=/tmp/telgram_bot_supervisord.log
+logfile_maxbytes=50MB
+logfile_backups=10
+loglevel=info
+pidfile=/tmp/telgram_bot_supervisord.pid
+nodaemon=false
+minfds=1024
+minprocs=200
+
+[rpcinterface:supervisor]
+supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
+
+[supervisorctl]
+serverurl=unix:///tmp/telgram_bot_supervisord.sock
+
+[include]
+files = /home/django/planetpython_telegrambot/gunicorn.conf
